@@ -33,4 +33,12 @@ describe('POST: /register', () => {
       .set('Content-Type', 'application/json');
       expect(res.status).toBe(200);
     });
+    
+    it('should contain token', async () => {
+      const res = await request(server)
+      .post('/api/auth/login')
+      .send({ username: "username", password: "password" })
+      .set('Content-Type', 'application/json');
+      expect(res.body.token).toBeTruthy();
+    });
 });
