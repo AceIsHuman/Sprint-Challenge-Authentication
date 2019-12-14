@@ -6,10 +6,13 @@ const genToken = require('./generateToken.js');
 router.post('/register', requireUser, async (req, res) => {
   const user = req.body;
   user.password = bcrypt.hashSync(user.password, 12);
-  const _user = await Users.insert(user);
-  const { password, ...noPassword } = _user;
-  if (_user) return res.status(200).json(noPassword);
-  res.status(401).json({ errorMessage: "Username is taken." });
+  try {
+    const _user = await Users.insert(user);
+    const { password, ...noPassword } = _user;
+    if (_user) return res.status(200).json(noPassword);
+  } catch(error) {
+    res.status(401).json({ errorMessage: "Username is taken." });
+  }
 });
 
 router.post('/login', requireUser, async (req, res) => {
