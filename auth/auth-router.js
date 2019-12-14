@@ -8,7 +8,7 @@ router.post('/register', requireUser, async (req, res) => {
   user.password = bcrypt.hashSync(user.password, 12);
   const _user = await Users.insert(user);
   const { password, ...noPassword } = _user;
-  if (_user) res.status(200).json(noPassword);
+  if (_user) return res.status(200).json(noPassword);
   res.status(401).json({ errorMessage: "Username is taken." });
 });
 
