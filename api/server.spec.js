@@ -24,3 +24,13 @@ describe('POST: /register', () => {
     expect(res.status).toBe(401);
   });
 });
+  
+  describe('POST: /login', () => {
+    it('should return 200', async () => {
+      const res = await request(server)
+      .post('/api/auth/login')
+      .send({ username: "username", password: "password" })
+      .set('Content-Type', 'application/json');
+      expect(res.status).toBe(200);
+    });
+});
